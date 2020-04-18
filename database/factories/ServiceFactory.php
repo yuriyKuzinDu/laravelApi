@@ -11,6 +11,6 @@ $factory->define(Service::class, function (Faker $faker) {
         'name'          =>  $faker->sentence(3, true),
         'description'   =>  $faker->paragraph(),
 
-        'company_id'    =>  function(){ return Company::all()->random();}
+        'company_id'    =>  fn() => Company::all()->random()
     ];
 });
