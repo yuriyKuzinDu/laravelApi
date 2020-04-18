@@ -16,7 +16,8 @@ class CompanyResource extends JsonResource
     {
         return [
             'name'          =>  $this->name,
-            'description'   =>  $this->description
+            'description'   =>  $this->description,
+            'services'      =>  route('services.index', $this->id)
         ];
     }
 }
