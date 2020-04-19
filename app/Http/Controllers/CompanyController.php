@@ -86,7 +86,11 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        //
+        $company->update($request->all());
+
+        return response([
+            'data' => new CompanyResource($company)
+        ], Response::HTTP_CREATED);
     }
 
     /**
