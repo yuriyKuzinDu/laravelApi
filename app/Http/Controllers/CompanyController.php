@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Company\CompanyResource;
 use App\Model\Company;
+use App\Http\Requests\CompanyRequest;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CompanyController extends Controller
 {
@@ -13,6 +15,11 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('index', 'show');
+    }
+
     public function index()
     {
         return Company::paginate(5);
@@ -34,9 +41,17 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyRequest $request)
     {
         //
+        $company = new Company();
+        $company->name = $request->name;
+        $company->description = $request->description;
+        $company->save();
+
+        return response([
+            'data' => new CompanyResource($company)
+        ], Response::HTTP_CREATED);
     }
 
     /**
