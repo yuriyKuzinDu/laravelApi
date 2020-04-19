@@ -90,7 +90,7 @@ class CompanyController extends Controller
 
         return response([
             'data' => new CompanyResource($company)
-        ], Response::HTTP_CREATED);
+        ], Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -101,6 +101,8 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        $company->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
